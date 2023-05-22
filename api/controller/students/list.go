@@ -3,10 +3,15 @@ package students
 import (
 	"net/http"
 
-	"github.com/brunoarruda04/golang-clean-architecture/entities"
+	student_usecase "github.com/brunoarruda04/golang-clean-architecture/usecase/student"
 	"github.com/gin-gonic/gin"
 )
 
 func List(c *gin.Context) {
-	c.JSON(http.StatusOK, entities.Students)
+	students, err := student_usecase.List()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, students)
 }

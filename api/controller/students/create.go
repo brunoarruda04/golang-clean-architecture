@@ -4,19 +4,22 @@ import (
 	"net/http"
 
 	"github.com/brunoarruda04/golang-clean-architecture/api/controller"
-	"github.com/brunoarruda04/golang-clean-architecture/entities"
+	student_usecase "github.com/brunoarruda04/golang-clean-architecture/usecase/student"
 	"github.com/gin-gonic/gin"
 )
 
 func Create(c *gin.Context) {
 	var input Input
-	if err := c.Bind(&input); err != nil {
+	var err error
+	if err = c.Bind(&input); err != nil {
 		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError(err.Error()))
 		return
 	}
 
-	student := entities.NewStudent(input.Name, input.Age)
-	entities.Students = append(entities.Students, *student)
-
+	student, err := student_usecase.Create(input.Name, input.Age)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, controller.NewResponseMessageError(err.Error()))
+		return
+	}
 	c.JSON(http.StatusAccepted, student)
 }
