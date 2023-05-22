@@ -4,16 +4,19 @@ import (
 	"fmt"
 
 	"github.com/brunoarruda04/golang-clean-architecture/infra/config"
+	"github.com/brunoarruda04/golang-clean-architecture/infra/database"
 	"github.com/gin-gonic/gin"
 )
 
 type Service struct {
-	*gin.Engine
+	Engine   *gin.Engine
+	Database *database.Database
 }
 
-func NewService() *Service {
+func NewService(db *database.Database) *Service {
 	return &Service{
-		gin.Default(),
+		Engine:   gin.Default(),
+		Database: db,
 	}
 }
 
