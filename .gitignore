@@ -26,3 +26,5 @@ go.work
 .env
 .database
 # End of https://www.toptal.com/developers/gitignore/api/go
+
+vendor
