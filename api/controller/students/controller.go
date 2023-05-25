@@ -1,12 +1,14 @@
 package students
 
-import usecase "github.com/brunoarruda04/golang-clean-architecture/usecase/student"
+import (
+	"github.com/brunoarruda04/golang-clean-architecture/entities"
+)
 
 type StudentController struct {
-	StudentsUsecase *usecase.StudentUsecase
+	StudentsUsecase entities.StudentUsecaseContract
 }
 
-func NewStudentController(su *usecase.StudentUsecase) *StudentController {
+func NewStudentController(su entities.StudentUsecaseContract) *StudentController {
 	return &StudentController{
 		StudentsUsecase: su,
 	}
