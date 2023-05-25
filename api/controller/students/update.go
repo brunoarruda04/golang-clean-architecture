@@ -5,11 +5,10 @@ import (
 
 	"github.com/brunoarruda04/golang-clean-architecture/api/controller"
 	"github.com/brunoarruda04/golang-clean-architecture/entities/shared"
-	student_usecase "github.com/brunoarruda04/golang-clean-architecture/usecase/student"
 	"github.com/gin-gonic/gin"
 )
 
-func Update(c *gin.Context) {
+func (sc *StudentController) Update(c *gin.Context) {
 	var input Input
 	var err error
 
@@ -27,7 +26,7 @@ func Update(c *gin.Context) {
 		return
 	}
 
-	student, err := student_usecase.UpdateById(input.UUID, input.Name, input.Age)
+	student, err := sc.StudentsUsecase.Update(input.UUID, input.Name, input.Age)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, controller.NewResponseMessageError(err.Error()))
 		return

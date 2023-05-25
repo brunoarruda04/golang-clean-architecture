@@ -14,6 +14,9 @@ type Student struct {
 type StudentRepository interface {
 	Create(student *Student) error
 	List() ([]Student, error)
+	FindById(id uuid.UUID) (Student, error)
+	Update(student *Student) error
+	Delete(id uuid.UUID) error
 }
 
 func NewStudent(name string, age int) *Student {

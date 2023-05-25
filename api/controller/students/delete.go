@@ -5,11 +5,10 @@ import (
 
 	"github.com/brunoarruda04/golang-clean-architecture/api/controller"
 	"github.com/brunoarruda04/golang-clean-architecture/entities/shared"
-	student_usecase "github.com/brunoarruda04/golang-clean-architecture/usecase/student"
 	"github.com/gin-gonic/gin"
 )
 
-func Delete(c *gin.Context) {
+func (sc *StudentController) Delete(c *gin.Context) {
 	var input Input
 	var err error
 
@@ -20,7 +19,7 @@ func Delete(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError("Problema com seu o ID"))
 		return
 	}
-	err = student_usecase.DeleteById(input.UUID)
+	err = sc.StudentsUsecase.Delete(input.UUID)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, controller.NewResponseMessageError(err.Error()))

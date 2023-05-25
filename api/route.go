@@ -2,7 +2,6 @@ package api
 
 import (
 	infra_controller "github.com/brunoarruda04/golang-clean-architecture/api/controller/infra"
-	student_controlller "github.com/brunoarruda04/golang-clean-architecture/api/controller/students"
 )
 
 func (s *Service) GetRoutes() {
@@ -10,7 +9,7 @@ func (s *Service) GetRoutes() {
 	groupStudent := s.Engine.Group("students")
 	groupStudent.GET("/", s.StudentController.List)
 	groupStudent.POST("/", s.StudentController.Create)
-	groupStudent.PUT("/:id", student_controlller.Update)
-	groupStudent.DELETE("/:id", student_controlller.Delete)
-	groupStudent.GET("/:id", student_controlller.Details)
+	groupStudent.PUT("/:id", s.StudentController.Update)
+	groupStudent.DELETE("/:id", s.StudentController.Delete)
+	groupStudent.GET("/:id", s.StudentController.Details)
 }

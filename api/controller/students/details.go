@@ -6,11 +6,10 @@ import (
 	"github.com/brunoarruda04/golang-clean-architecture/api/controller"
 	"github.com/brunoarruda04/golang-clean-architecture/entities"
 	"github.com/brunoarruda04/golang-clean-architecture/entities/shared"
-	student_usecase "github.com/brunoarruda04/golang-clean-architecture/usecase/student"
 	"github.com/gin-gonic/gin"
 )
 
-func Details(c *gin.Context) {
+func (sc *StudentController) Details(c *gin.Context) {
 	var student entities.Student
 	var input Input
 	var err error
@@ -23,7 +22,7 @@ func Details(c *gin.Context) {
 		return
 	}
 
-	student, err = student_usecase.SearchById(input.UUID)
+	student, err = sc.StudentsUsecase.SearchById(input.UUID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError(err.Error()))
 		return

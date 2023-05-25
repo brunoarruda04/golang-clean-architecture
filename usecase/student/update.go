@@ -8,13 +8,10 @@ import (
 	"github.com/google/uuid"
 )
 
-func UpdateById(id uuid.UUID, name string, age int) (student entities.Student, err error) {
-	var newStudents []entities.Student
-
-	for _, studentElement := range entities.Students {
-		if studentElement.ID == id {
-			student = studentElement
-		}
+func (su *StudentUsecase) Update(id uuid.UUID, name string, age int) (entities.Student, error) {
+	student, err := su.Database.StudentRepository.FindById(id)
+	if err != nil {
+		return student, nil
 	}
 
 	if student.ID == shared.GetUuidEmpty() {
@@ -24,14 +21,6 @@ func UpdateById(id uuid.UUID, name string, age int) (student entities.Student, e
 	student.Name = name
 	student.Age = age
 
-	for _, studentElement := range entities.Students {
-		if student.ID == studentElement.ID {
-			newStudents = append(newStudents, student)
-		} else {
-			newStudents = append(newStudents, studentElement)
-		}
-	}
-
-	entities.Students = newStudents
+	err = su.Database.StudentRepository.Update(&student)
 	return student, err
 }
